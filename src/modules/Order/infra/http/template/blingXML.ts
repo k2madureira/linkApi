@@ -4,18 +4,20 @@ interface IXML {
   code: number;
   title: string;
   unitValue: number;
+  person_name: string;
 }
 
-function xml({ name, code, title, unitValue }: IXML) {
+function xml({ name, code, title, unitValue, person_name }: IXML) {
   return `
   <?xml version="1.0" encoding="ISO-8859-1"?>
     <pedido>
+      <vendedor>${name}</vendedor>
       <cliente>
-          <nome>${name}</nome>
+          <nome>${person_name}</nome>
       </cliente>
       <transporte>
         <volume>
-          <servico>digital</servico>
+          <servico>Internet</servico>
         </volume>
       </transporte>
       <itens>
@@ -25,6 +27,7 @@ function xml({ name, code, title, unitValue }: IXML) {
               <qtde>1</qtde>
               <vlr_unit>${unitValue}</vlr_unit>
               <vlr>1</vlr>
+              <un>1</un>
           </item>
       </itens>
     </pedido>

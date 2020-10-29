@@ -4,7 +4,7 @@ import { format, parseISO } from 'date-fns';
 
 import xmlTemplate from '../template/blingXML';
 import blingAPI from '../../services/blingAPI';
-// import Order from '../../mongoose/schemas/Order';
+import Order from '../../mongoose/schemas/Order';
 
 interface IDeal {
   owner_name: string;
@@ -16,6 +16,7 @@ interface IDeal {
   weighted_value: string;
   formatted_weighted_value: string;
   org_name: string;
+  person_name: string;
 }
 
 export default class OrderController {
@@ -27,6 +28,7 @@ export default class OrderController {
       const promises = Deal.data.map(async (deal: IDeal) => {
         const order = {
           name: deal.owner_name,
+          person_name: deal.person_name,
           code: deal.id,
           title: deal.title,
           unitValue: deal.value,
@@ -41,10 +43,9 @@ export default class OrderController {
           `/pedido/json/?apikey=${process.env.BLING_API_KEY}&xml=${xml}`,
         );
 
-        console.log(r.data.retorno.pedidos);
+        console.log(deal);
 
         return order;
-        // const orderXmlConverted = converDealToXml(order);
 
         /* await Order.create({
           id_order: deal.id,
