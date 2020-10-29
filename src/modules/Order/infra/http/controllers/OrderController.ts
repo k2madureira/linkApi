@@ -3,6 +3,7 @@ import { DealsController } from 'pipedrive';
 import { format, parseISO } from 'date-fns';
 
 import xmlTemplate from '../template/blingXML';
+import blingAPI from '../../services/blingAPI';
 // import Order from '../../mongoose/schemas/Order';
 
 interface IDeal {
@@ -35,7 +36,13 @@ export default class OrderController {
         };
 
         const xml = xmlTemplate(order);
-        console.log(xml);
+
+        const r = await blingAPI.post(
+          `/pedido/json/?apikey=${process.env.BLING_API_KEY}&xml=${xml}`,
+        );
+
+        console.log(r.data.retorno.pedidos);
+
         return order;
         // const orderXmlConverted = converDealToXml(order);
 
