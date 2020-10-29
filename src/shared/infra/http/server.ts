@@ -1,8 +1,11 @@
-import './bootstrap';
+import '../bootstrap';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import AppError from './errors/AppError';
-import Routes from './routes';
+import pipe from 'pipedrive';
+import AppError from '../../errors/AppError';
+import Routes from './routes/routes';
+
+// import '@shared/infra/typeorm';
 
 const app = express();
 app.use(cors());
@@ -25,4 +28,10 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   });
 });
 
-export default app;
+pipe.Configuration.apiToken = `${process.env.PIPEDRIVE_API_KEY}`;
+const port = process.env.PORT || 3333;
+app.listen(port, () => {
+  console.log(`🚀 Server start on port ${port}`);
+});
+
+app.listen(1800);

@@ -12,6 +12,7 @@
       "@modules/*": ["modules/*"],
       "@shared/*": ["shared/*"]
     },
+    
     "esModuleInterop": true,
      "experimentalDecorators": true,
      "emitDecoratorMetadata": true,
