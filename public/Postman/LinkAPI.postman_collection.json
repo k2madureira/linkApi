@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "8b21db65-33f0-43b0-a8cf-c3dbf6556258",
+		"name": "LinkAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-pipedrive.herokuapp.com/",
+					"protocol": "https",
+					"host": [
+						"api-pipedrive",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "show routes"
+			},
+			"response": []
+		},
+		{
+			"name": "List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-pipedrive.herokuapp.com/order/all",
+					"protocol": "https",
+					"host": [
+						"api-pipedrive",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"order",
+						"all"
+					]
+				},
+				"description": "List all orders"
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api-pipedrive.herokuapp.com/order",
+					"protocol": "https",
+					"host": [
+						"api-pipedrive",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"order"
+					]
+				},
+				"description": "Load orders with status equal to \"won\" from pipedrive to Bling"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

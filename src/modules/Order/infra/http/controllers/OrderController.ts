@@ -55,7 +55,7 @@ export default class OrderController {
         orders.push(ordersArr[0]);
       }
 
-      return response.json(orders);
+      return response.json({ Deals: orders });
     } catch (error) {
       return response.json(error);
     }

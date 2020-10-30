@@ -27,23 +27,6 @@ describe('\n\n ===== Order ====== \n', () => {
 
   it('Should be able list all Order', async () => {
     const order = await request(app).get('/order/all');
-    expect(order.body).toEqual([
-      {
-        id_order: '_ORDER_',
-        client: {
-          company: 'TEST',
-          contact_person: 'TEST',
-        },
-        detail: {
-          code: 1,
-          description: 'TEST',
-          currency: 'TEST',
-          total_value: 1,
-          formatted_weighted_value: 'TEST',
-        },
-
-        created_at: 'TEST',
-      },
-    ]);
+    expect(order.body).toHaveProperty('Deals');
   });
 });
