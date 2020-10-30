@@ -6,6 +6,8 @@ import xmlTemplate from '../template/blingXML';
 import blingAPI from '../../services/blingAPI';
 import Order from '../../mongoose/schemas/Order';
 
+import IOrderDTO from '../../../dtos/orderDTO';
+
 interface IDeal {
   owner_name: string;
   id: number;
@@ -29,7 +31,17 @@ export default class OrderController {
           .json({ msg: 'The list of orders is empty!!' });
       }
 
-      return response.json(findAll);
+      const orders = findAll.map(order => {
+        return {
+          id_order: order.detail.code,
+          company: order.company,
+          contact_person: order.contact_person,
+          detail: order.detail,
+          created_at: format(new Date(order.created_at), 'yyyy-MM-dd'),
+        };
+      });
+
+      return response.json(orders);
     } catch (error) {
       return response.json(error);
     }
@@ -54,7 +66,7 @@ export default class OrderController {
 
         const xml = xmlTemplate(order);
 
-        const r = await blingAPI.post(
+        await blingAPI.post(
           `/pedido/json/?apikey=${process.env.BLING_API_KEY}&xml=${xml}`,
         );
         const findOrder = await Order.findOne({ id_order: deal.id });
@@ -62,15 +74,16 @@ export default class OrderController {
         if (!findOrder) {
           await Order.create({
             id_order: deal.id,
-            customer: {
+            client: {
               company: deal.org_name,
               contact_person: deal.person_name,
             },
-            item: {
+            detail: {
               code: order.code,
               description: deal.title,
               currency: deal.currency,
               total_value: deal.weighted_value,
+              formatted_weighted_value: deal.formatted_weighted_value,
             },
           });
         }
