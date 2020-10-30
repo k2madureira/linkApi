@@ -1,23 +1,27 @@
 import mongoose from 'mongoose';
 
-mongoose.Promise = global.Promise;
+import IOrderDTO from '../../../dtos/orderDTO';
 
-mongoose
-  .connect(
-    'mongodb+srv://linkApi:linkApi@cluster0.faphu.mongodb.net/linkDB?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
-    },
-  )
-  .then(function () {
-    console.log('Mongo on...');
-  })
-  .catch(function (err) {
-    console.log(`Houve um erro ao se conectar ao MongoDB: ${err}`);
-  });
+if (process.env.NODE_ENV !== 'test') {
+  mongoose.Promise = global.Promise;
+
+  mongoose
+    .connect(
+      'mongodb+srv://linkApi:linkApi@cluster0.faphu.mongodb.net/linkDB?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+      },
+    )
+    .then(function () {
+      console.log('Mongo on...');
+    })
+    .catch(function (err) {
+      console.log(`Houve um erro ao se conectar ao MongoDB: ${err}`);
+    });
+}
 
 const Orders = new mongoose.Schema(
   {
@@ -37,4 +41,4 @@ const Orders = new mongoose.Schema(
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } },
 );
 
-export default mongoose.model('Orders', Orders);
+export default mongoose.model<IOrderDTO>('Orders', Orders);

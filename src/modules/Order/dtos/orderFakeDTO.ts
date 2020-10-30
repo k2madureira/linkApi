@@ -1,7 +1,5 @@
-import { Document } from 'mongoose';
-
-export default interface IOrderDTO extends Document {
-  id_order: number;
+export default interface IOrderDTO {
+  id_order: string;
   client: {
     company: string;
     contact_person: string;
