@@ -1,20 +1,18 @@
 import mongoose from 'mongoose';
 
-import IOrderDTO from '../../../dtos/orderDTO';
+import IOrderDTO from '../../../dtos/IOrderDTO';
 
 if (process.env.NODE_ENV !== 'test') {
+  const str_connect = process.env.DB_STR_CONNECT;
   mongoose.Promise = global.Promise;
 
   mongoose
-    .connect(
-      'mongodb+srv://linkApi:linkApi@cluster0.faphu.mongodb.net/linkDB?retryWrites=true&w=majority',
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-      },
-    )
+    .connect(`${str_connect}`, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    })
     .then(function () {
       console.log('Mongo on...');
     })

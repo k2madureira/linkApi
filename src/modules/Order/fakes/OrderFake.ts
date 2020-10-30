@@ -1,7 +1,7 @@
 import { uuid } from 'uuidv4';
 import IOrderRepository from '../repositories/IOrderRepository';
 
-import IOrderDTO from '../dtos/orderFakeDTO';
+import IOrderDTO from '../dtos/IOrderFakeDTO';
 
 export default class Order implements IOrderRepository {
   order: Array<IOrderDTO> = [];
