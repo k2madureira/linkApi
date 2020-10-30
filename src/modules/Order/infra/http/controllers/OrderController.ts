@@ -20,6 +20,21 @@ interface IDeal {
 }
 
 export default class OrderController {
+  public async index(request: Request, response: Response): Promise<Response> {
+    try {
+      const findAll = await Order.find();
+      if (!findAll) {
+        return response
+          .status(400)
+          .json({ msg: 'The list of orders is empty!!' });
+      }
+
+      return response.json(findAll);
+    } catch (error) {
+      return response.json(error);
+    }
+  }
+
   public async create(request: Request, response: Response): Promise<Response> {
     try {
       const { status = 'won' } = request.body;
@@ -42,24 +57,25 @@ export default class OrderController {
         const r = await blingAPI.post(
           `/pedido/json/?apikey=${process.env.BLING_API_KEY}&xml=${xml}`,
         );
+        const findOrder = await Order.findOne({ id_order: deal.id });
 
-        console.log(deal);
+        if (!findOrder) {
+          await Order.create({
+            id_order: deal.id,
+            customer: {
+              company: deal.org_name,
+              contact_person: deal.person_name,
+            },
+            item: {
+              code: order.code,
+              description: deal.title,
+              currency: deal.currency,
+              total_value: deal.weighted_value,
+            },
+          });
+        }
 
         return order;
-
-        /* await Order.create({
-          id_order: deal.id,
-          customer: {
-            company: deal.org_name,
-            contact_person: deal.person_name,
-          },
-          item: {
-            code: order.code,
-            description: deal.title,
-            currency: deal.weighted_value_currency,
-            total_value: deal.weighted_value,
-          },
-        }); */
       });
       const responseDeals = await Promise.all(promises);
 

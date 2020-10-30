@@ -5,8 +5,6 @@ import pipe from 'pipedrive';
 import AppError from '../../errors/AppError';
 import Routes from './routes/routes';
 
-// import '@shared/infra/typeorm';
-
 const app = express();
 app.use(cors());
 app.use(express.json());
