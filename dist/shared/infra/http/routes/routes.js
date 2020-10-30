@@ -12,6 +12,22 @@ var _order = _interopRequireDefault(require("../../../../modules/Order/infra/htt
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const routes = (0, _express.Router)();
+routes.get('/', (request, response) => {
+  return response.json({
+    routes: {
+      order: {
+        list: {
+          path: '/order/all',
+          type: 'get'
+        },
+        create: {
+          path: '/order',
+          type: 'post'
+        }
+      }
+    }
+  });
+});
 routes.use('/order', _order.default);
 var _default = routes;
 exports.default = _default;
