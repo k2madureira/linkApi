@@ -1,5 +1,5 @@
-# ClinPet 🐶🐺
-👨‍⚕️ Appointment schedules for you pet
+# LinkAPI ⚡
+✅ Integration between pipedrive and Bling
 ![node](https://user-images.githubusercontent.com/26586585/75612422-f747e380-5b01-11ea-9213-ec9742b66a47.png)
 
 ### Structure:
@@ -11,63 +11,42 @@
         |_ Postman
     |_ src
         |_ modules
-            |_ Appointment
+            |_ Order
                   |_ __tests__
-                        |_> Appointment.spec.ts
-                  |_ controllers
-                        |_> AppointmentController.ts
+                        |_> Order.spec.ts
                   |_ dtos
-                        |_> ICreateAppointmentDTO.ts
+                        |_> IOrderDTO.ts
+                        |_> IOrderFakeDTO.ts
                   |_ fakes
-                        |_> FakeAppointment.ts
-                  |_ models
-                        |_> Appointment.ts
+                        |_> OrderFake.ts
+                  |_ infra
+                        |_ http  
+                            |_ controllers
+                                |_> OrderController.ts
+                            |_ routes
+                                |_> order.routes.ts
+                            |_ template
+                                |_> blingXML.ts
+                        |_ mongoose
+                            |_ schemas
+                                |_> Order.ts
+                        |_ services
+                             |_> blingAPI.ts
+                              
                   |_ repositories
-                        |_> IAppointmentRepository.ts
-            |_ Medic
-                 |_ __tests__
-                 |_ controllers
-                 |_ dtos
-                 |_ fakes
-                 |_ models
-                 |_ repositories
-
-            |_ Specialty
-                 |_ __tests__
-                 |_ controllers
-                 |_ dtos
-                 |_ fakes
-                 |_ models
-                 |_ repositories
-
+                        |_> IOrderRepository.ts
+           
         |_ shared
-              |_ database
-                   |_> appointments.json
-                   |_> medics.json
-                   |_> specialtys.json
-              |_> app.ts
-              |_> bootstrap.ts
-              |_> routes.ts
-              |_> server.ts
-```
-
-### Data schema files JSON:
-```
-   _____________      _____________     ____________________  
-  | Specialtys  |    |   Medics    |   |    Appointments    |
-  |_____________|    |------------ |   |--------------------|
-  |     id _____|_   |    id       |   |        id          |
-  | description | |__|_specialty_id|   |       name         |
-  |_____________| |  |_____________|   |      species       |
-                  |                    |       breed        |
-                  |                    |       urgent       |
-                  |                    |       status       |
-                  |                    |       medic_id     |
-                  |____________________|_____specialty_id   |
-                                       |     created_at     |
-                                       |     updated_at     |
-                                       |____________________|
-  
+              |_ errors
+                   |_> AppError.ts
+              |_ infra
+                   |_ http
+                       |_ routes
+                            |_> route.ts
+                       |_ app.ts
+                       |_ server.ts
+                   |_> bootstrap.ts     
+             
 ```
 
 ### Docs:
@@ -105,328 +84,66 @@
 
 |Number| Type | Route | Definition |
 |-|------|-------|------------|
-|1| *Post* | /specialty | Create an specialty |
-|2| *Put* | /specialty/**id** | Update an specialty |
-|3| *Get* | /specialty | List all specialties |
-|4| *Post* | /medic | Register new medic |
-|5| *Put* | /medic/**:id** | Update an medic using **id** |
-|6| *Delete* | /medic/**:id** | Delete an medic using **id** |
-|7| *Post* | /appointment | Create an appointment |
-|8| *Put* | /appointment/**:id** | Update an appointment using **id** |
-|9| *Delete* | /appointment/**:id** | Delete an appointment using **id** |
-|10| *Get* | /appointment *or* / | List all appointments |
-|11| *Get* | /appointment/medic/**:id**/all | List all appointments for an medic using **id** |
-|12| *Get* | /appointment/medic/**:id** | Next appointment for an medic using **id** |
+|1| *Post* | /order | Create an order |
+|2| *Get* | /order/all | List Order |
+
 
 
 
 #### Exemples:
 
 
-1. http://localhost:3333/specialty **(POST)**
+1. http://localhost:3333/order **(POST)**
 
 ##### Request [ body: JSON]
 ```
-{
-	"description": "Nutricionista"
-}
+{}
 ```
 
 ##### Response [JSON]
 
 ```
 {
-  "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-  "description": "Nutricionista"
+  "Deals": [
+    [
+      {
+        "name": "__NAME__",
+        "person_name": "__TEST__",
+        "code": 2,
+        "title": "__TESTE__",
+        "unitValue": 50,
+        "currency": "BRL",
+        "formatedValue": "R$ 50",
+        "addDate": "2020-10-29"
+      }
+    ]
+  ]
 }
  ```
 
  ------------------------------------------------------------
  
- 2. http://localhost:3333/specialty/ccf1167d-df15-4281-a68c-3830626b98df **(PUT)**
-
-##### Request [ body: JSON]
-```
-{
-	"description": "Cardiologista"
-}
-```
+ 2. http://localhost:3333/order/all **(GET)**
 
 ##### Response [JSON]
 
 ```
-{
-  "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-  "description": "Cardiologista"
-}
- ```
-
- ------------------------------------------------------------
-
-3. http://localhost:3333/specialty **(GET)**
-
-
-##### Response [JSON]
-
-```
-{
-  "specialtys": [
-    {
-      "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-      "description": "Nutricionista"
-    }
-  ]
-}
- ```
-
- ------------------------------------------------------------
-
-4. http://localhost:3333/medic **(POST)**
-
-##### Request [ body: JSON]
-```
-{
-	"name": "EXAMPLE",
-  "specialty_id":"ccf1167d-df15-4281-a68c-3830626b98df"
-}
-```
-
-##### Response [JSON]
-
-```
-{
-  "id": "94babbaa-2a7e-4874-815b-5ded5b5269f0",
-  "name": "EXAMPLE",
-  "specialty": {
-    "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-    "description": "Nutricionista"
+[
+  {
+    "id_order": "2",
+    "company": "__TESTE__",
+    "contact_person": "__TESTE__",
+    "detail": {
+      "code": "2",
+      "description": "__TESTE__",
+      "currency": "BRL",
+      "total_value": 50,
+      "formatted_weighted_value": "R$ 50"
+    },
+    "created_at": "2020-10-29"
   }
-}
+]
  ```
 
  ------------------------------------------------------------
 
-
-5. http://localhost:3333/medic/94babbaa-2a7e-4874-815b-5ded5b5269f0 **(PUT)**
-
-**Fields [name, specialty_id] optional**
-
-##### Request [ body: JSON]
-```
-{
-	"name": "EXAMPLE UPDATED"
-}
-```
-
-##### Response [JSON]
-
-```
-{
-  "id": "94babbaa-2a7e-4874-815b-5ded5b5269f0",
-  "name": "EXAMPLE UPDATED",
-  "specialty": {
-    "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-    "description": "Nutricionista"
-  }
-}
- ```
-
- ------------------------------------------------------------
-
- 6. http://localhost:3333/medic/94babbaa-2a7e-4874-815b-5ded5b5269f0 **(DELETE)**
-
-**Fields [name, specialty_id] optional**
-
-
-##### Response [JSON]
-
-```
-{
-  "success": "deleted"
-}
- ```
-
- ------------------------------------------------------------
-
- 7. http://localhost:3333/appointment **(POST)**
-
-**Fields [name, specialty_id, species] is not optional**
-##### Request [ body: JSON]
-```
-{
-	"name": "Jhon",
-  "species": "Dog",
-  "breed": "",
-  "urgent": false,
-	"medic_id":"94babbaa-2a7e-4874-815b-5ded5b5269f0",
-  "specialty_id": "ccf1167d-df15-4281-a68c-3830626b98df"
-}
-```
-
-##### Response [JSON]
-
-```
-{
-  "id": "c269eae4-443a-4e40-bd83-bd0426e26274",
-  "name": "Jhon",
-  "species": "Dog",
-  "breed": "",
-  "urgent": false,
-  "status": "Pendente",
-  "medic": {
-    "id": "94babbaa-2a7e-4874-815b-5ded5b5269f0",
-    "name": "EXAMPLE UPDATED",
-    "specialty": {
-      "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-      "description": "Nutricionista"
-    }
-  },
-  "created_at": "2020-07-13T22:23:27.729Z"
-}
- ```
-
- ------------------------------------------------------------
-
- 8. http://localhost:3333/appointment/c269eae4-443a-4e40-bd83-bd0426e26274 **(PUT)**
-
-**If [status === "Atendido"], this appointment gonna be deleted**
-##### Request [ body: JSON]
-```
-{
-	"name": "Jony",
-	"urgent": false,
-	"status": "Pendente"
-}
-```
-
-##### Response [JSON]
-
-```
-{
-  "id": "c269eae4-443a-4e40-bd83-bd0426e26274",
-  "name": "Jony",
-  "species": "Dog",
-  "breed": "",
-  "urgent": false,
-  "status": "Pendente",
-  "medic": {
-    "id": "94babbaa-2a7e-4874-815b-5ded5b5269f0",
-    "name": "EXAMPLE UPDATED"
-  },
-  "created_at": "2020-07-13T22:23:27.729Z",
-  "updated_at": "2020-07-13T22:27:04.165Z"
-}
- ```
-
- ------------------------------------------------------------
-
-  9. http://localhost:3333/appointment/94babbaa-2a7e-4874-815b-5ded5b5269f0 **(DELETE)**
-
-
-##### Response [JSON]
-
-```
-{
-  "success": "deleted"
-}
- ```
-
- ------------------------------------------------------------
-
- 10. http://localhost:3333/appointment **(GET)**
-
-
-##### Response [JSON]
-
-```
-{
-  "appointments": [
-    {
-      "id": "c269eae4-443a-4e40-bd83-bd0426e26274",
-      "name": "Jony",
-      "species": "Dog",
-      "breed": "",
-      "urgent": false,
-      "status": "Pendente",
-      "medic": {
-        "id": "94babbaa-2a7e-4874-815b-5ded5b5269f0",
-        "name": "EXAMPLE UPDATED",
-        "specialty": {
-          "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-          "description": "Nutricionista"
-        }
-      },
-      "created_at": "2020-07-13T22:23:27.729Z",
-      "updated_at": "2020-07-13T22:27:04.165Z"
-    }
-  ]
-}
- ```
-
- ------------------------------------------------------------
-
- 11. http://localhost:3333/appointment/medic/94babbaa-2a7e-4874-815b-5ded5b5269f0/all **(GET)**
-
-
-##### Response [JSON]
-
-```
-{
-  "appointments": [
-    {
-      "id": "c269eae4-443a-4e40-bd83-bd0426e26274",
-      "name": "Jony",
-      "species": "Dog",
-      "breed": "",
-      "urgent": false,
-      "status": "Pendente",
-      "medic": {
-        "id": "94babbaa-2a7e-4874-815b-5ded5b5269f0",
-        "name": "EXAMPLE UPDATED",
-        "specialty": {
-          "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-          "description": "Nutricionista"
-        }
-      },
-      "created_at": "2020-07-13T22:23:27.729Z",
-      "updated_at": "2020-07-13T22:27:04.165Z"
-    }
-  ]
-}
- ```
-
- ------------------------------------------------------------
-
-
- 12. http://localhost:3333/appointment/medic/94babbaa-2a7e-4874-815b-5ded5b5269f0 **(GET)**
-
-**Seeks the doctor's next appointment, evaluating the required specialty, urgency and the status of the animals**
-
-##### Response [JSON]
-
-```
-{
-  "appointments": [
-    {
-      "id": "c269eae4-443a-4e40-bd83-bd0426e26274",
-      "name": "Jony",
-      "species": "Dog",
-      "breed": "",
-      "urgent": false,
-      "status": "Pendente",
-      "medic": {
-        "id": "94babbaa-2a7e-4874-815b-5ded5b5269f0",
-        "name": "EXAMPLE UPDATED",
-        "specialty": {
-          "id": "ccf1167d-df15-4281-a68c-3830626b98df",
-          "description": "Nutricionista"
-        }
-      },
-      "created_at": "2020-07-13T22:23:27.729Z",
-      "updated_at": "2020-07-13T22:27:04.165Z"
-    }
-  ]
-}
- ```
-
- ------------------------------------------------------------
