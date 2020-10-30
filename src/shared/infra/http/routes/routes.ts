@@ -4,7 +4,7 @@ import orderRouter from '@modules/Order/infra/http/routes/order.routes';
 
 const routes = Router();
 
-routes.use('/', (request: Request, response: Response) => {
+routes.get('/', (request: Request, response: Response) => {
   return response.json({
     routes: {
       order: {
