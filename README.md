@@ -51,13 +51,13 @@
 
 ### Docs:
 
-1. PostMan ( https://documenter.getpostman.com/view/9357385/T17Nc5KC )
+1. PostMan ( https://documenter.getpostman.com/view/9357385/TVYKawNv)
 2. PostMan Collection ( public/Postman/linkApi.postman_collection.json )
 3. docs
 4. Code Coverage ( linkApi/public/coverage/lcov-report/index.html )
 5. Insominia.json
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2f774259b17c79834391)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/064a9b5074e8b2a4bb7e)
 
 ### Setting up local environment:
 
