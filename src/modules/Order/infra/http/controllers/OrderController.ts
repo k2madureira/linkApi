@@ -24,7 +24,7 @@ interface IDeal {
 }
 
 export default class OrderController {
-  public async index(request: Request, response: Response): Promise<Response> {
+  public async index(__: Request, response: Response): Promise<Response> {
     try {
       const orders = [];
       if (currencyLoad !== 'test') {
@@ -66,7 +66,7 @@ export default class OrderController {
 
       const responseData = [];
 
-      if (currencyLoad !== 'test') {
+      if (currencyLoad !== 'test' && status === 'won') {
         const Deal = await DealsController.getAllDeals(status);
 
         const promises = Deal.data.map(async (deal: IDeal) => {
