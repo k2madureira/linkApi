@@ -52,9 +52,9 @@
 ### Docs:
 
 1. PostMan ( https://documenter.getpostman.com/view/9357385/T17Nc5KC )
-2. PostMan Collection ( public/Postman/ClinPet.postman_collection.json )
+2. PostMan Collection ( public/Postman/linkApi.postman_collection.json )
 3. docs
-4. Code Coverage ( ClinPet/public/coverage/lcov-report/index.html )
+4. Code Coverage ( linkApi/public/coverage/lcov-report/index.html )
 5. Insominia.json
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/2f774259b17c79834391)
@@ -62,8 +62,8 @@
 ### Setting up local environment:
 
 1. Install **Yarn**;
-2. Using terminal, navigate to the folder where the project was cloned and run:<br> **git clone https://github.com/k2madureira/ClinPet.git**
-3. Using terminal, access the **ClinPet** folder and Run **yarn install**, to download all necessary dependencies;
+2. Using terminal, navigate to the folder where the project was cloned and run:<br> **git clone https://github.com/k2madureira/linkApi.git**
+3. Using terminal, access the **linkApi** folder and Run **yarn install**, to download all necessary dependencies;
 4. Using terminal run **yarn dev:server**, to start the server on port **3333**; (Typescript)
 5. For testing, the **insomnia** software is recommended;
 6. To perform the unit test **yarn test**
